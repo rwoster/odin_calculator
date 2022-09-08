@@ -1,6 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
+:root {
+    --stdRadius: 7px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Share Tech Mono", monospace;
+    border-radius: var(--stdRadius);
+}
 html {
     background-color: #ccc;
-    box-sizing: border-box;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -9,12 +19,30 @@ html {
 
 /* borders */
 #app {
-    border: 2px solid salmon;
+    border: 5px solid #333;
+    box-shadow: 5px 5px 10px #555;
 }
-#display {
+#display-container {
     border: 2px solid green;
     height: 100px;
     margin: 10px;
+}
+#display-upper,
+#display-lower {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 3%;
+}
+#display-upper {
+    /* border: 2px solid purple; */
+    height: 30%;
+    font-size: 0.75em;
+}
+#display-lower {
+    /* border: 2px solid orangered; */
+    height: 70%;
+    font-size: 1.75em;
 }
 #btn-container {
     /* border: 2px solid blue; */
@@ -23,15 +51,33 @@ html {
 
 #btn-container {
     display: grid;
-    grid-template-columns: repeat(3, 75px);
-    grid-template-rows: repeat(4, 75px);
+    grid-template-columns: repeat(4, 75px);
+    grid-template-rows: repeat(5, 75px);
     gap: 10px;
 }
 
 .num {
+    font-size: 1.25em;
     border: 1px solid #555;
-    border-radius: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.equals {
+    grid-row: span 2;
+    background-color: lightgreen;
+}
+.del {
+    background-color: lightcoral;
+    text-shadow: 0 0 4px whitesmoke;
+}
+.clear {
+    background-color: rgba(202, 13, 13);
+    color: whitesmoke;
+    text-shadow: 0 0 4px black;
+}
+.operator {
+    background-color: lightblue;
 }
