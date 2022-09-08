@@ -26,4 +26,14 @@ function operate(operator, operand1, operand2) {
     }
 }
 
-console.log(operate("%", 7, 3));
+const btnContainer = document.querySelector("#btn-container");
+
+const array = ["del", 0, "clear", 1, 2, 3, 4, 5, 6, 7, 8, 9];
+array.reverse();
+
+array.forEach((item) => {
+    const btn = document.createElement("div");
+    btn.textContent = item;
+    btn.classList.add("num");
+    btnContainer.appendChild(btn);
+});
