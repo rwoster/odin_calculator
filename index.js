@@ -1,75 +1,113 @@
-// const app = document.querySelector("#app");
-// app.textContent = "hello, world";
+// DOM elements
+const btnContainer = document.querySelector("#btn-container");
+const lowerDisplay = document.querySelector("#display-lower");
+const upperDisplay = document.querySelector("#display-upper");
 
-// basic arithmetic functions
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
-const getRemainder = (a, b) => a % b;
+// user input variables
+let operand1 = "";
+let operand2 = "";
+let operator = "";
+
+// button data
+const calcBtns = [
+    { value: "7", class: ["btn", "num"] },
+    { value: "8", class: ["btn", "num"] },
+    { value: "9", class: ["btn", "num"] },
+    { value: "+", class: ["btn", "operator"] },
+    { value: "4", class: ["btn", "num"] },
+    { value: "5", class: ["btn", "num"] },
+    { value: "6", class: ["btn", "num"] },
+    { value: "-", class: ["btn", "operator"] },
+    { value: "1", class: ["btn", "num"] },
+    { value: "2", class: ["btn", "num"] },
+    { value: "3", class: ["btn", "num"] },
+    { value: "*", class: ["btn", "operator"] },
+    { value: ".", class: ["btn", "num"] },
+    { value: "0", class: ["btn", "num"] },
+    { value: "=", class: ["btn", "equals"] },
+    { value: "/", class: ["btn", "operator"] },
+    { value: "clear", class: ["btn", "clear"] },
+    { value: "del", class: ["btn", "del"] },
+    { value: "%", class: ["btn", "operator"] },
+];
+
+// paints the calculator to the DOM
+calcBtns.forEach((item) => {
+    // create button elements
+    const btn = document.createElement("div");
+    // assign value to button
+    btn.textContent = item.value;
+    // assign proper classes to the button
+    item.class.forEach((className) => {
+        btn.classList.add(className);
+    });
+    // append button to DOM
+    btnContainer.appendChild(btn);
+});
+
+function setUpperDisplayText() {
+    upperDisplay.textContent = `${operand1} ${operator}`;
+}
+function setLowerDisplayText() {
+    lowerDisplay.textContent = `${operand1}`;
+}
 
 // operation function -- returns output to user
 function operate(operator, operand1, operand2) {
     switch (operator) {
         case "+":
-            return add(operand1, operand2);
+            return operand1 + operand2;
         case "-":
-            return subtract(operand1, operand2);
+            return operand1 - operand2;
         case "*":
-            return multiply(operand1, operand2);
+            return operand1 * operand2;
         case "/":
-            return divide(operand1, operand2);
+            return operand1 / operand2;
         case "%":
-            return getRemainder(operand1, operand2);
+            return operand1 % operand2;
         default:
             return "whoops!";
     }
 }
 
-const btnContainer = document.querySelector("#btn-container");
-const lowerDisplay = document.querySelector("#display-lower");
+// button nodeLists
+const numBtns = document.querySelectorAll(".num");
+const opBtns = document.querySelectorAll(".operator");
+const clearBtn = document.querySelector(".clear");
+const delBtn = document.querySelector(".del");
+const equalsBtn = document.querySelector(".equals");
 
-// const array = ["del", 0, "clear", 1, 2, 3, 4, 5, 6, 7, 8, 9];
-const array = [
-    7,
-    8,
-    9,
-    "+",
-    4,
-    5,
-    6,
-    "-",
-    1,
-    2,
-    3,
-    "*",
-    ".",
-    0,
-    "=",
-    "/",
-    "clear",
-    "del",
-    "%",
-];
+let hasFirstOperand = false;
 
-array.forEach((item) => {
-    const btn = document.createElement("div");
-    btn.textContent = item;
-    if (item === "=") btn.classList.add("equals");
-    if (item === "del") btn.classList.add("del");
-    if (item === "clear") btn.classList.add("clear");
-    if (
-        item === "+" ||
-        item === "-" ||
-        item === "*" ||
-        item === "/" ||
-        item === "%"
-    )
-        btn.classList.add("operator");
-    btn.classList.add("num");
-    btnContainer.appendChild(btn);
+numBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-        lowerDisplay.textContent = e.target.innerText;
-        console.log(typeof e.target.innerText);
+        // const input = parseInt(e.target.innerHTML);
+        const input = e.target.innerHTML;
+        console.log(input);
+        if (!hasFirstOperand) {
+            operand1.concat(input);
+            console.log(operand1);
+        }
     });
+});
+opBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        hasFirstOperand = true;
+        operator = e.target.innerHTML;
+        console.log(operator);
+    });
+});
+equalsBtn.addEventListener("click", () => {
+    if (operator && operand1 && operand2) {
+        operate(operator, operand1, operand2);
+    }
+});
+clearBtn.addEventListener("click", () => {
+    operator = "";
+    operand1 = "";
+    operand2 = "";
+    hasFirstOperand = false;
+});
+delBtn.addEventListener("click", () => {
+    // operand1
 });

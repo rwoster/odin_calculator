@@ -10,7 +10,7 @@
     border-radius: var(--stdRadius);
 }
 html {
-    background-color: #ccc;
+    background-color: burlywood;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -20,10 +20,12 @@ html {
 /* borders */
 #app {
     border: 5px solid #333;
+    background-color: #333;
     box-shadow: 5px 5px 10px #555;
 }
 #display-container {
-    border: 2px solid green;
+    border: 3px solid green;
+    background-color: lightgray;
     height: 100px;
     margin: 10px;
 }
@@ -56,13 +58,14 @@ html {
     gap: 10px;
 }
 
-.num {
+.btn {
     font-size: 1.25em;
     border: 1px solid #555;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    background-color: lightseagreen;
 }
 
 .equals {
