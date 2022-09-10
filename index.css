@@ -84,3 +84,6 @@ html {
 .operator {
     background-color: lightblue;
 }
+.num {
+    border-radius: 50%;
+}
