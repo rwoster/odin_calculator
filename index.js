@@ -125,20 +125,20 @@ opBtns.forEach((btn) => {
     });
 });
 
-//{needsWork} EQUALS BTN
+//{working} EQUALS BTN
 equalsBtn.addEventListener("click", () => {
     if (operand2.length > 0) {
         setUpperDisplayText();
         const answer = operate(operator, operand1, operand2);
         lowerDisplay.textContent = answer;
 
-        // reset calc and return answer as operand1
+        // reset calc
         operand1 = "";
-        operand2 = "";
         operator = "";
+        operand2 = "";
+        firstOperand = true;
 
-        operand1 = operand1.concat(toString(answer));
-        console.log(operand1);
+        console.log(typeof answer);
     }
 });
 
