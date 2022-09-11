@@ -7,8 +7,8 @@ const upperDisplay = document.querySelector("#display-upper");
 let operand1 = "";
 let operand2 = "";
 let operator = "";
-let hasFirstOperand = false;
-let isOperating = false;
+let firstOperand = true;
+// let isOperating = false;
 
 // button data
 const calcBtns = [
@@ -48,16 +48,16 @@ calcBtns.forEach((item) => {
 });
 
 function setUpperDisplayText() {
-    if (!hasFirstOperand) {
-        upperDisplay.textContent = `${operand1}`;
-    } else if (hasFirstOperand && !isOperating) {
-        upperDisplay.textContent = `${operand1} ${operator}`;
-    } else if (hasFirstOperand && isOperating) {
+    if (operand2.length > 0) {
         upperDisplay.textContent = `${operand1} ${operator} ${operand2}`;
+    } else if (firstOperand) {
+        upperDisplay.textContent = `${operand1}`;
+    } else if (!firstOperand) {
+        upperDisplay.textContent = `${operand1} ${operator}`;
     }
 }
 function setLowerDisplayText() {
-    lowerDisplay.textContent = hasFirstOperand ? operand2 : operand1;
+    lowerDisplay.textContent = firstOperand ? operand1 : operand2;
 }
 
 // operation function -- returns output to user
@@ -78,6 +78,21 @@ function operate(operator, operand1, operand2) {
     }
 }
 
+function clearDisplays() {
+    operator = "";
+    operand1 = "";
+    operand2 = "";
+    firstOperand = true;
+    setLowerDisplayText();
+    setUpperDisplayText();
+}
+
+function delNum(num) {
+    num = num.slice(0, -1);
+    setLowerDisplayText();
+    setUpperDisplayText();
+}
+
 // button nodeLists
 const numBtns = document.querySelectorAll(".num");
 const opBtns = document.querySelectorAll(".operator");
@@ -89,51 +104,53 @@ const equalsBtn = document.querySelector(".equals");
 numBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         const input = e.target.innerHTML;
-        if (!hasFirstOperand) {
+        if (firstOperand) {
             operand1 = operand1.concat(input);
         } else {
             operand2 = operand2.concat(input);
         }
         setLowerDisplayText();
+        setUpperDisplayText();
     });
 });
 
 //{working} OPERATOR BTNS
 opBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-        hasFirstOperand = true;
-        operator = e.target.innerHTML;
-        setUpperDisplayText();
+        if (operand1.length > 0) {
+            firstOperand = false;
+            operator = e.target.innerHTML;
+            setUpperDisplayText();
+        }
     });
 });
 
 //{needsWork} EQUALS BTN
 equalsBtn.addEventListener("click", () => {
-    if (hasFirstOperand) {
-        isOperating === true;
+    if (operand2.length > 0) {
         setUpperDisplayText();
-        if (isOperating) {
-            lowerDisplay.textContent = operate(operator, operand1, operand2);
-        }
-        isOperating === false;
+        const answer = operate(operator, operand1, operand2);
+        lowerDisplay.textContent = answer;
+
+        // reset calc and return answer as operand1
+        operand1 = "";
+        operand2 = "";
+        operator = "";
+
+        operand1 = operand1.concat(toString(answer));
+        console.log(operand1);
     }
 });
 
 //{working} CLEAR BTN
-clearBtn.addEventListener("click", () => {
-    operator = "";
-    operand1 = "";
-    operand2 = "";
-    hasFirstOperand = false;
-    setLowerDisplayText();
-    setUpperDisplayText();
-});
+clearBtn.addEventListener("click", clearDisplays);
 
 //{working} DELETE BUTTON
 delBtn.addEventListener("click", () => {
-    if (!hasFirstOperand) {
-        operand1 = operand1.slice(0, -1);
-        setLowerDisplayText();
+    if (firstOperand) {
+        delNum(operand1);
+    } else {
+        delNum(operand2);
     }
 });
 
@@ -141,6 +158,6 @@ delBtn.addEventListener("click", () => {
 //     console.log(`
 //         operand1: ${operand1}
 //         operator: ${operator}
-//         operand2: ${operand2}
+//         operand2: ${operand2.length}
 //     `);
 // });
