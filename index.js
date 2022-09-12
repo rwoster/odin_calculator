@@ -8,7 +8,6 @@ let operand1 = "";
 let operand2 = "";
 let operator = "";
 let firstOperand = true;
-// let isOperating = false;
 
 // button data
 const calcBtns = [
@@ -24,7 +23,7 @@ const calcBtns = [
     { value: "2", class: ["btn", "num"] },
     { value: "3", class: ["btn", "num"] },
     { value: "*", class: ["btn", "operator"] },
-    { value: ".", class: ["btn", "num"] },
+    { value: ".", class: ["btn", "num", "decimal"] },
     { value: "0", class: ["btn", "num"] },
     { value: "=", class: ["btn", "equals"] },
     { value: "/", class: ["btn", "operator"] },
@@ -96,6 +95,7 @@ const opBtns = document.querySelectorAll(".operator");
 const clearBtn = document.querySelector(".clear");
 const delBtn = document.querySelector(".del");
 const equalsBtn = document.querySelector(".equals");
+const decimalBtn = document.querySelector(".decimal");
 
 //{working} INTEGER BTNS
 numBtns.forEach((btn) => {
@@ -118,6 +118,7 @@ opBtns.forEach((btn) => {
             operator = e.target.innerHTML;
             setUpperDisplayText();
         }
+        decimalBtn.classList.remove("disabled");
     });
 });
 
@@ -134,12 +135,15 @@ equalsBtn.addEventListener("click", () => {
         operand2 = "";
         firstOperand = true;
 
-        console.log(typeof answer);
+        decimalBtn.classList.remove("disabled");
     }
 });
 
 //{working} CLEAR BTN
-clearBtn.addEventListener("click", clearDisplays);
+clearBtn.addEventListener("click", () => {
+    clearDisplays;
+    decimalBtn.classList.remove("disabled");
+});
 
 //{working} DELETE BUTTON
 delBtn.addEventListener("click", () => {
@@ -152,11 +156,21 @@ delBtn.addEventListener("click", () => {
     }
 });
 
-window.addEventListener("click", () => {
-    console.log(`
-        operand1: ${operand1}
-        operator: ${operator}
-        operand2: ${operand2}
-        firstOperand: ${firstOperand}
-    `);
+//{working}
+decimalBtn.addEventListener("click", () => {
+    if (firstOperand) {
+        if (operand1.includes(".")) {
+            decimalBtn.classList.add("disabled");
+        }
+    } else {
+        if (operand2.includes(".")) {
+            decimalBtn.classList.add("disabled");
+        }
+    }
 });
+
+// window.addEventListener("click", () => {
+//     console.log(`
+//         ${decimalBtn.classList}
+//     `);
+// });

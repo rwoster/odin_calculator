@@ -87,3 +87,9 @@ html {
 .num {
     border-radius: 50%;
 }
+
+.disabled {
+    /* cursor: not-allowed; */
+    pointer-events: none;
+    background-color: lightcoral;
+}
