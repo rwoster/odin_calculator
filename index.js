@@ -81,12 +81,11 @@ function operate(operator, operand1, operand2) {
     }
 }
 
-function clearDisplays() {
+function clearInputs() {
     operand1 = "";
     operator = "";
     operand2 = "";
     firstOperand = true;
-    setDisplays();
 }
 
 // button nodeLists
@@ -128,20 +127,15 @@ equalsBtn.addEventListener("click", () => {
         setUpperDisplayText();
         const answer = operate(operator, operand1, operand2);
         lowerDisplay.textContent = answer;
-
-        // reset calc
-        operand1 = "";
-        operator = "";
-        operand2 = "";
-        firstOperand = true;
-
+        clearInputs();
         decimalBtn.classList.remove("disabled");
     }
 });
 
 //{working} CLEAR BTN
 clearBtn.addEventListener("click", () => {
-    clearDisplays;
+    clearInputs();
+    setDisplays();
     decimalBtn.classList.remove("disabled");
 });
 
@@ -169,8 +163,93 @@ decimalBtn.addEventListener("click", () => {
     }
 });
 
-// window.addEventListener("click", () => {
-//     console.log(`
-//         ${decimalBtn.classList}
-//     `);
-// });
+window.addEventListener("keypress", (e) => {
+    console.log(e.key);
+    if (e.key === "0") {
+        console.log("hooray!");
+    }
+
+    //{working} catch INTEGERS
+    if (
+        e.key === "0" ||
+        e.key === "1" ||
+        e.key === "2" ||
+        e.key === "3" ||
+        e.key === "4" ||
+        e.key === "5" ||
+        e.key === "6" ||
+        e.key === "7" ||
+        e.key === "8" ||
+        e.key === "9"
+    ) {
+        const input = e.key;
+        if (firstOperand) {
+            operand1 = operand1.concat(input);
+        } else {
+            operand2 = operand2.concat(input);
+        }
+        setDisplays();
+    }
+
+    //{working} catch decimals
+    if (e.key === ".") {
+        const input = e.key;
+        if (firstOperand) {
+            operand1 = operand1.concat(input);
+            if (operand1.includes(".")) {
+                decimalBtn.classList.add("disabled");
+            }
+        } else {
+            operand2 = operand2.concat(input);
+            if (operand2.includes(".")) {
+                decimalBtn.classList.add("disabled");
+            }
+        }
+        setDisplays();
+        console.log(input);
+    }
+
+    //{working}catch OPERANDS
+    if (
+        e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/" ||
+        e.key === "%"
+    ) {
+        if (operand1.length > 0) {
+            firstOperand = false;
+            operator = e.key;
+            setUpperDisplayText();
+        }
+        decimalBtn.classList.remove("disabled");
+    }
+
+    //{working}catch a key for CLEAR
+    if (e.key === "c" || e.key === "C") {
+        clearInputs();
+        setDisplays();
+        decimalBtn.classList.remove("disabled");
+    }
+
+    //{working}catch a key for DEL
+    if (e.key === "Delete") {
+        if (firstOperand) {
+            operand1 = operand1.slice(0, -1);
+            setDisplays();
+        } else {
+            operand2 = operand2.slice(0, -1);
+            setDisplays();
+        }
+    }
+
+    //{working}catch a key for equals
+    if (e.key === "Enter") {
+        if (operand2.length > 0) {
+            setUpperDisplayText();
+            lowerDisplay.textContent = operate(operator, operand1, operand2);
+            clearInputs();
+            decimalBtn.classList.remove("disabled");
+        }
+    }
+});
