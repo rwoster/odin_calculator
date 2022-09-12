@@ -24,7 +24,7 @@ html {
     box-shadow: 5px 5px 10px #555;
 }
 #display-container {
-    border: 3px solid green;
+    border: 4px solid lightcoral;
     background-color: lightgray;
     height: 100px;
     margin: 10px;

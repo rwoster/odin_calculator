@@ -59,6 +59,10 @@ function setUpperDisplayText() {
 function setLowerDisplayText() {
     lowerDisplay.textContent = firstOperand ? operand1 : operand2;
 }
+function setDisplays() {
+    setUpperDisplayText();
+    setLowerDisplayText();
+}
 
 // operation function -- returns output to user
 function operate(operator, operand1, operand2) {
@@ -79,18 +83,11 @@ function operate(operator, operand1, operand2) {
 }
 
 function clearDisplays() {
-    operator = "";
     operand1 = "";
+    operator = "";
     operand2 = "";
     firstOperand = true;
-    setLowerDisplayText();
-    setUpperDisplayText();
-}
-
-function delNum(num) {
-    num = num.slice(0, -1);
-    setLowerDisplayText();
-    setUpperDisplayText();
+    setDisplays();
 }
 
 // button nodeLists
@@ -109,8 +106,7 @@ numBtns.forEach((btn) => {
         } else {
             operand2 = operand2.concat(input);
         }
-        setLowerDisplayText();
-        setUpperDisplayText();
+        setDisplays();
     });
 });
 
@@ -148,16 +144,19 @@ clearBtn.addEventListener("click", clearDisplays);
 //{working} DELETE BUTTON
 delBtn.addEventListener("click", () => {
     if (firstOperand) {
-        delNum(operand1);
+        operand1 = operand1.slice(0, -1);
+        setDisplays();
     } else {
-        delNum(operand2);
+        operand2 = operand2.slice(0, -1);
+        setDisplays();
     }
 });
 
-// window.addEventListener("click", () => {
-//     console.log(`
-//         operand1: ${operand1}
-//         operator: ${operator}
-//         operand2: ${operand2.length}
-//     `);
-// });
+window.addEventListener("click", () => {
+    console.log(`
+        operand1: ${operand1}
+        operator: ${operator}
+        operand2: ${operand2}
+        firstOperand: ${firstOperand}
+    `);
+});
