@@ -68,15 +68,15 @@ function setDisplays() {
 function operate(operator, operand1, operand2) {
     switch (operator) {
         case "+":
-            return parseInt(operand1) + parseInt(operand2);
+            return parseFloat(operand1) + parseFloat(operand2);
         case "-":
-            return parseInt(operand1) - parseInt(operand2);
+            return parseFloat(operand1) - parseFloat(operand2);
         case "*":
-            return parseInt(operand1) * parseInt(operand2);
+            return parseFloat(operand1) * parseFloat(operand2);
         case "/":
-            return parseInt(operand1) / parseInt(operand2);
+            return parseFloat(operand1) / parseFloat(operand2);
         case "%":
-            return parseInt(operand1) % parseInt(operand2);
+            return parseFloat(operand1) % parseFloat(operand2);
         default:
             return "whoops!";
     }
